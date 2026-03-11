@@ -1,11 +1,7 @@
 import { motion } from "framer-motion";
 import { WHATSAPP_URL } from "@/config/whatsapp";
 
-interface OfferDetailsProps {
-  onOpenSimulacao: () => void;
-}
-
-const OfferDetails = ({ onOpenSimulacao }: OfferDetailsProps) => {
+const OfferDetails = () => {
   return (
     <section id="oferta" className="py-16 bg-muted">
       <div className="container grid gap-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-start">

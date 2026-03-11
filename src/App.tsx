@@ -17,7 +17,7 @@ function App() {
         <Hero onOpenSimulacao={() => setModalSimulacaoAberto(true)} />
         <Benefits onOpenSimulacao={() => setModalSimulacaoAberto(true)} />
         <HowItWorks />
-        <OfferDetails onOpenSimulacao={() => setModalSimulacaoAberto(true)} />
+        <OfferDetails />
         <FAQ />
         <CTAStrong />
       </main>
