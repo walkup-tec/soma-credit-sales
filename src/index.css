@@ -53,6 +53,22 @@
     background: linear-gradient(135deg, #2775e5, #de074f);
   }
 
+  /* Botão flutuante - efeito wave/pulse nas cores SOMA */
+  @keyframes somaFloatingWave {
+    0% {
+      box-shadow: 0 0 0 0 hsl(var(--accent) / 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 14px hsl(var(--accent) / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 hsl(var(--accent) / 0);
+    }
+  }
+  .floating-cta-wave-soma {
+    animation: somaFloatingWave 2.3s ease-out infinite;
+  }
+
   #simbolo-linha {
     fill: none;
     stroke-dasharray: 644.1 644.1;
