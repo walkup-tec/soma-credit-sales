@@ -49,7 +49,11 @@ const HowItWorks = () => {
           />
 
           <div className="space-y-8">
-            {steps.map((step, i) => (
+            {steps.map((step, i) => {
+              const baseDelay = 0.1 + i * 1.05;
+              const delay = i === 3 ? 0.1 + 2 * 1.05 + 0.2 : baseDelay;
+
+              return (
               <motion.div
                 key={step.title}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -57,7 +61,7 @@ const HowItWorks = () => {
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{
                   duration: 1,
-                  delay: 0.1 + i * 1.05,
+                  delay,
                   ease: "linear",
                 }}
                 className={`relative flex items-start gap-6 md:gap-8 min-h-[100px] ${
@@ -86,7 +90,7 @@ const HowItWorks = () => {
                 {/* Espaço vazio do outro lado no desktop */}
                 <div className="hidden md:block flex-1 md:w-[calc(50%-2.5rem)]" />
               </motion.div>
-            ))}
+            )})}
           </div>
         </div>
       </div>
