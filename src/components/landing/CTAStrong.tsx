@@ -1,7 +1,23 @@
 import { motion } from "framer-motion";
 import { WHATSAPP_URL } from "@/config/whatsapp";
+import { trackMetaCustomEvent, trackMetaEvent } from "@/lib/metaPixel";
+import {
+  META_CUSTOM_EVENTS,
+  META_EVENT_CHANNELS,
+  META_EVENT_PLACEMENTS,
+} from "@/lib/metaPixelEvents";
 
 const CTAStrong = () => {
+  const handleWhatsappClick = () => {
+    trackMetaEvent("Contact", {
+      channel: META_EVENT_CHANNELS.WHATSAPP,
+      placement: META_EVENT_PLACEMENTS.BOTTOM_STRONG_CTA,
+    });
+    trackMetaCustomEvent(META_CUSTOM_EVENTS.WHATSAPP_CTA_CLICKED, {
+      placement: META_EVENT_PLACEMENTS.BOTTOM_STRONG_CTA,
+    });
+  };
+
   return (
     <section className="py-16 bg-gradient-to-r from-primary via-secondary to-primary">
       <motion.div
@@ -17,7 +33,13 @@ const CTAStrong = () => {
         <p className="text-sm md:text-base max-w-2xl mx-auto text-primary-foreground/90">
           Toda a sua contratação de forma 100% digital, através do WhatsApp. Clique no botão abaixo e confira!
         </p>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-block mt-4">
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block mt-4"
+          onClick={handleWhatsappClick}
+        >
           <button
             type="button"
             className="inline-flex items-center gap-3 rounded-full bg-accent px-10 py-4 text-sm font-bold text-accent-foreground shadow-xl hover:bg-accent/90 transition-colors"

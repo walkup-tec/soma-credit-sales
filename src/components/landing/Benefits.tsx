@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { trackMetaCustomEvent, trackMetaEvent } from "@/lib/metaPixel";
+import { META_CUSTOM_EVENTS, META_EVENT_PLACEMENTS } from "@/lib/metaPixelEvents";
 
 const benefits = [
   {
@@ -25,6 +27,16 @@ interface BenefitsProps {
 }
 
 const Benefits = ({ onOpenSimulacao }: BenefitsProps) => {
+  const handleOpenSimulacao = () => {
+    trackMetaEvent("Lead", {
+      source: META_EVENT_PLACEMENTS.BENEFITS_MOBILE_CARD,
+    });
+    trackMetaCustomEvent(META_CUSTOM_EVENTS.SIMULATION_STARTED, {
+      source: META_EVENT_PLACEMENTS.BENEFITS_MOBILE_CARD,
+    });
+    onOpenSimulacao();
+  };
+
   return (
     <section id="beneficios" className="py-14 bg-muted">
       <div className="container space-y-8">
@@ -54,7 +66,7 @@ const Benefits = ({ onOpenSimulacao }: BenefitsProps) => {
             </div>
             <button
               type="button"
-              onClick={onOpenSimulacao}
+              onClick={handleOpenSimulacao}
               className="w-full mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-bold text-accent-foreground shadow-lg hover:bg-accent/90 transition-colors"
             >
               De quanto você precisa?

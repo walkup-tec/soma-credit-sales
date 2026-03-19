@@ -7,10 +7,21 @@ import FAQ from "./components/landing/FAQ";
 import CTAStrong from "./components/landing/CTAStrong";
 import Footer from "./components/landing/Footer";
 import ValorSimulacaoModal from "./components/landing/ValorSimulacaoModal";
+import { trackMetaCustomEvent, trackMetaEvent } from "./lib/metaPixel";
+import { META_CUSTOM_EVENTS, META_EVENT_PLACEMENTS } from "./lib/metaPixelEvents";
 
 function App() {
   const [modalSimulacaoAberto, setModalSimulacaoAberto] = useState(false);
   const [showFloatingCta, setShowFloatingCta] = useState(false);
+  const handleOpenFloatingSimulacao = () => {
+    trackMetaEvent("Lead", {
+      source: META_EVENT_PLACEMENTS.FLOATING_TOP_CTA,
+    });
+    trackMetaCustomEvent(META_CUSTOM_EVENTS.SIMULATION_STARTED, {
+      source: META_EVENT_PLACEMENTS.FLOATING_TOP_CTA,
+    });
+    setModalSimulacaoAberto(true);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +56,7 @@ function App() {
       {showFloatingCta && (
         <button
           type="button"
-          onClick={() => setModalSimulacaoAberto(true)}
+          onClick={handleOpenFloatingSimulacao}
           className="fixed top-0 left-1/2 -translate-x-1/2 z-40 h-10 px-6 bg-accent text-accent-foreground rounded-b-xl shadow-xl flex items-center justify-center hover:bg-accent/90 transition-transform floating-cta-wave-soma"
           aria-label="Contrate agora"
         >

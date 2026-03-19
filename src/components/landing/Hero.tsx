@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
 import { WHATSAPP_URL } from "@/config/whatsapp";
+import { trackMetaCustomEvent, trackMetaEvent } from "@/lib/metaPixel";
+import {
+  META_CUSTOM_EVENTS,
+  META_EVENT_CHANNELS,
+  META_EVENT_PLACEMENTS,
+} from "@/lib/metaPixelEvents";
 import SomaLogo from "./SomaLogo";
 
 interface HeroProps {
@@ -7,6 +13,26 @@ interface HeroProps {
 }
 
 const Hero = ({ onOpenSimulacao }: HeroProps) => {
+  const handleWhatsappClick = () => {
+    trackMetaEvent("Contact", {
+      channel: META_EVENT_CHANNELS.WHATSAPP,
+      placement: META_EVENT_PLACEMENTS.HERO_PRIMARY_CTA,
+    });
+    trackMetaCustomEvent(META_CUSTOM_EVENTS.WHATSAPP_CTA_CLICKED, {
+      placement: META_EVENT_PLACEMENTS.HERO_PRIMARY_CTA,
+    });
+  };
+
+  const handleOpenSimulacao = () => {
+    trackMetaEvent("Lead", {
+      source: META_EVENT_PLACEMENTS.HERO_SIMULACAO_CARD,
+    });
+    trackMetaCustomEvent(META_CUSTOM_EVENTS.SIMULATION_STARTED, {
+      source: META_EVENT_PLACEMENTS.HERO_SIMULACAO_CARD,
+    });
+    onOpenSimulacao();
+  };
+
   return (
     <section
       id="inicio"
@@ -83,7 +109,12 @@ const Hero = ({ onOpenSimulacao }: HeroProps) => {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-3 pt-3"
           >
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleWhatsappClick}
+            >
               <button
                 type="button"
                 className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-bold text-accent-foreground shadow-lg hover:bg-accent/90 transition-colors"
@@ -127,7 +158,7 @@ const Hero = ({ onOpenSimulacao }: HeroProps) => {
             </div>
             <button
               type="button"
-              onClick={onOpenSimulacao}
+              onClick={handleOpenSimulacao}
               className="w-full mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-bold text-accent-foreground shadow-lg hover:bg-accent/90 transition-colors"
             >
               De quanto você precisa?

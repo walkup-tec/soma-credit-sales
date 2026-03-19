@@ -2,6 +2,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { trackMetaCustomEvent, trackMetaEvent } from "@/lib/metaPixel";
+import { META_CUSTOM_EVENTS, META_EVENT_FLOWS } from "@/lib/metaPixelEvents";
 
 /* Máscaras e normalização */
 const unmask = (v: string) => v.replace(/\D/g, "");
@@ -207,6 +209,14 @@ const ValorSimulacaoModal = ({ isOpen, onClose }: ValorSimulacaoModalProps) => {
   const handleAutorizaWhatsapp = async (sim: boolean) => {
     if (sim) {
       await saveLead({ optin: "SIM", finalizado: "SIM" });
+      trackMetaEvent("CompleteRegistration", {
+        flow: META_EVENT_FLOWS.SIMULACAO_CREDITO_CLT,
+        optin_whatsapp: true,
+      });
+      trackMetaCustomEvent(META_CUSTOM_EVENTS.SIMULATION_COMPLETED, {
+        flow: META_EVENT_FLOWS.SIMULACAO_CREDITO_CLT,
+        optin_whatsapp: true,
+      });
       onClose();
     }
   };
